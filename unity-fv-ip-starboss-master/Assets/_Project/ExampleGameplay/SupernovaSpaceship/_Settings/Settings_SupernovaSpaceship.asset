@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83806ad17bc2578459be61eb31ea6ec6, type: 3}
+  m_Name: Settings_SupernovaSpaceship
+  m_EditorClassIdentifier: 
+  thrustAmount: 120
+  thrustInput: 0
+  yawSpeed: 30
+  pitchSpeed: 15
+  steeringInput: {x: 0.10007899, y: 0, z: 0.05947072}
+  leanAmount_X: 90
+  leanAmount_Y: 30
+  shootRate: 0.15
+  shootInput: 0
+  cameraTurnAmount: 0

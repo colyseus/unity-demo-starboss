@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b830610f4f6f2bc4b8105c485f2a3239, type: 3}
+  m_Name: Settings_ProjectileLaser
+  m_EditorClassIdentifier: 
+  movementSpeed: 500
+  autoRemoveCountdown: 5
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 2561
