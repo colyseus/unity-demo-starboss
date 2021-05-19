@@ -61,3 +61,5 @@ crashlytics-build.properties
 Server/node_modules/.bin/blessed
 Server/node_modules/
 unity-fv-ip-starboss-master/Library/
+unity-fv-ip-starboss-master/Temp/
+unity-fv-ip-starboss-master/obj/
