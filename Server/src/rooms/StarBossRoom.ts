@@ -8,7 +8,6 @@ export class StarBossRoom extends Room<ColyseusRoomState> {
     clientEntities = new Map<string, string[]>();
     serverTime: number = 0;
     customMethodController: any = null;
-    customLogic: any;
     roomOptions: any;
 
     boss: StarBossWorm;
@@ -105,138 +104,18 @@ export class StarBossRoom extends Room<ColyseusRoomState> {
             this.roomId = options["roomId"];           
         }
 
+        this.initializeMessageHandling();
+
         // Set the room state
         this.setState(new ColyseusRoomState());
-
-        // Set the callback for the "ping" message for tracking server-client latency
-        this.onMessage("ping", (client) => {
-            client.send(0, { serverTime: this.serverTime });
-        });
-
-        // Set the callback for the "customMethod" message
-        this.onMessage("customMethod", (client, request) => {
-           this.onCustomMethod(client, request);
-        });
-
-        // Set the callback for the "entityUpdate" message
-        this.onMessage("entityUpdate", (client, entityUpdateArray) => {
-            if(this.state.networkedEntities.has(`${entityUpdateArray[0]}`) === false) return;
-
-            this.onEntityUpdate(client.id, entityUpdateArray);
-        });
-
-        // Set the callback for the "removeFunctionCall" message
-        this.onMessage("remoteFunctionCall", (client, RFCMessage) => {
-            //Confirm Sending Client is Owner 
-            if(this.state.networkedEntities.has(`${RFCMessage.entityId}`) === false) return;
-
-            RFCMessage.clientId = client.id;
-
-            // Broadcast the "remoteFunctionCall" to all clients except the one the message originated from
-            this.broadcast("onRFC", RFCMessage, RFCMessage.target == 0 ? {} : {except : client});
-        });
-
-        // Set the callback for the "setAttribute" message to set an entity or user attribute
-        this.onMessage("setAttribute", (client, attributeUpdateMessage) => {
-            this.setAttribute(client, attributeUpdateMessage); 
-        });
-
-
-        // Set the callback for the "removeEntity" message
-        this.onMessage("removeEntity", (client, removeId) => {
-            if(this.state.networkedEntities.has(removeId)) {
-                this.state.networkedEntities.delete(removeId);
-            }
-        });
-
-        // Set the callback for the "createEntity" message
-        this.onMessage("createEntity", (client, creationMessage) => {
-            // Generate new UID for the entity
-            let entityViewID = generateId();
-            let newEntity = new ColyseusNetworkedEntity().assign({
-                id: entityViewID,
-                ownerId: client.id,
-                timestamp: this.serverTime
-            });
-
-            let userName = entityViewID;
-
-            if(creationMessage.attributes["userName"] != null) {
-                userName = creationMessage.attributes["userName"];
-            }
-
-            if(creationMessage.creationId != null) newEntity.creationId = creationMessage.creationId;
-
-            newEntity.timestamp = parseFloat(this.serverTime.toString());
-
-            for (let key in creationMessage.attributes) {
-                if(key === "creationPos")
-                {
-                    newEntity.xPos = parseFloat(creationMessage.attributes[key][0]);
-                    newEntity.yPos = parseFloat(creationMessage.attributes[key][1]);
-                    newEntity.zPos = parseFloat(creationMessage.attributes[key][2]);
-                }
-                else if(key === "creationRot")
-                {
-                    newEntity.xRot = parseFloat(creationMessage.attributes[key][0]);
-                    newEntity.yRot = parseFloat(creationMessage.attributes[key][1]);
-                    newEntity.zRot = parseFloat(creationMessage.attributes[key][2]);
-                    newEntity.wRot = parseFloat(creationMessage.attributes[key][3]);
-                }
-                else {
-                    newEntity.attributes.set(key, creationMessage.attributes[key].toString());
-                }
-            }
-
-            // Add the entity to the room state's networkedEntities map 
-            this.state.networkedEntities.set(entityViewID, newEntity);
-
-            // Add the entity to the client entities collection
-            if(this.clientEntities.has(client.id)) {
-                this.clientEntities.get(client.id).push(entityViewID);
-            } else {
-                this.clientEntities.set(client.id, [entityViewID]);
-            }
-
-            logger.silly(`*** Send Player Joined Message  - User Name = ${userName}***`);
-
-            this.broadcast("playerJoined", {userName: userName}, {except : client});
-        });
 
         // Set the frequency of the patch rate
         this.setPatchRate(1000 / 20);
     
-        // Retrieve the custom logic for the room
-        const customLogic = await this.getCustomLogic(options["logic"]);
+        // Retrieve the custom logic for the room (Death match or Coop)
+        await this.getCustomLogic(options["logic"]);
         
-        if(customLogic == null)  logger.debug("NO Custom Logic Set");
-
-        try{
-            if(customLogic != null) {
-
-                this.setMetadata({isCoop: options["logic"] == "starBossCoop" });
-
-                customLogic.InitializeLogic(this, options);
-            }
-        }
-        catch(error){
-            logger.error("Error with custom room logic: " + error);
-        }
-
-        // Set the Simulation Interval callback
-        this.setSimulationInterval(dt => {
-            this.serverTime += dt;
-            //Run Custom Logic for room if loaded
-            try {
-                if(customLogic != null) 
-                    customLogic.ProcessLogic(this, dt);
-
-            } catch (error) {
-                logger.error("Error with custom room logic: " + error);
-            }
-            
-        } );
-
+        this.initializeGameTypeLogic(options);
     }
 
     // Callback when a client has joined the room
@@ -358,5 +237,134 @@ export class StarBossRoom extends Room<ColyseusRoomState> {
     }
 
     onDispose() {
+    }
+
+    initializeMessageHandling(){
+        // Set the callback for the "ping" message for tracking server-client latency
+        this.onMessage("ping", (client) => {
+            client.send(0, { serverTime: this.serverTime });
+        });
+
+        // Set the callback for the "customMethod" message
+        this.onMessage("customMethod", (client, request) => {
+           this.onCustomMethod(client, request);
+        });
+
+        // Set the callback for the "entityUpdate" message
+        this.onMessage("entityUpdate", (client, entityUpdateArray) => {
+            if(this.state.networkedEntities.has(`${entityUpdateArray[0]}`) === false) return;
+
+            this.onEntityUpdate(client.id, entityUpdateArray);
+        });
+
+        // Set the callback for the "removeFunctionCall" message
+        this.onMessage("remoteFunctionCall", (client, RFCMessage) => {
+            //Confirm Sending Client is Owner 
+            if(this.state.networkedEntities.has(`${RFCMessage.entityId}`) === false) return;
+
+            RFCMessage.clientId = client.id;
+
+            // Broadcast the "remoteFunctionCall" to all clients except the one the message originated from
+            this.broadcast("onRFC", RFCMessage, RFCMessage.target == 0 ? {} : {except : client});
+        });
+
+        // Set the callback for the "setAttribute" message to set an entity or user attribute
+        this.onMessage("setAttribute", (client, attributeUpdateMessage) => {
+            this.setAttribute(client, attributeUpdateMessage); 
+        });
+
+
+        // Set the callback for the "removeEntity" message
+        this.onMessage("removeEntity", (client, removeId) => {
+            if(this.state.networkedEntities.has(removeId)) {
+                this.state.networkedEntities.delete(removeId);
+            }
+        });
+
+        // Set the callback for the "createEntity" message
+        this.onMessage("createEntity", (client, creationMessage) => {
+            this.handleEntityCreation(client, creationMessage);
+        });
+    }
+
+    initializeGameTypeLogic(options: any){
+        if(this.customMethodController == null)  logger.debug("NO Custom Logic Set");
+
+        try{
+            if(this.customMethodController != null) {
+                this.setMetadata({isCoop: options["logic"] == "starBossCoop" });
+                this.customMethodController.InitializeLogic(this, options);
+            }
+        }
+        catch(error){
+            logger.error("Error with custom room logic: " + error);
+        }
+
+        // Set the Simulation Interval callback
+        this.setSimulationInterval(dt => {
+            this.serverTime += dt;
+            //Run Custom Logic for room if loaded
+            try {
+                if(this.customMethodController != null) 
+                    this.customMethodController.ProcessLogic(this, dt);
+
+            } catch (error) {
+                logger.error("Error with custom room logic: " + error);
+            }
+            
+        } );
+    }
+
+    handleEntityCreation(client : Client, creationMessage: any){
+        // Generate new UID for the entity
+        let entityViewID = generateId();
+        let newEntity = new ColyseusNetworkedEntity().assign({
+            id: entityViewID,
+            ownerId: client.id,
+            timestamp: this.serverTime
+        });
+
+        let userName = entityViewID;
+
+        if(creationMessage.attributes["userName"] != null) {
+            userName = creationMessage.attributes["userName"];
+        }
+
+        if(creationMessage.creationId != null) newEntity.creationId = creationMessage.creationId;
+
+        newEntity.timestamp = parseFloat(this.serverTime.toString());
+
+        for (let key in creationMessage.attributes) {
+            if(key === "creationPos")
+            {
+                newEntity.xPos = parseFloat(creationMessage.attributes[key][0]);
+                newEntity.yPos = parseFloat(creationMessage.attributes[key][1]);
+                newEntity.zPos = parseFloat(creationMessage.attributes[key][2]);
+            }
+            else if(key === "creationRot")
+            {
+                newEntity.xRot = parseFloat(creationMessage.attributes[key][0]);
+                newEntity.yRot = parseFloat(creationMessage.attributes[key][1]);
+                newEntity.zRot = parseFloat(creationMessage.attributes[key][2]);
+                newEntity.wRot = parseFloat(creationMessage.attributes[key][3]);
+            }
+            else {
+                newEntity.attributes.set(key, creationMessage.attributes[key].toString());
+            }
+        }
+
+        // Add the entity to the room state's networkedEntities map 
+        this.state.networkedEntities.set(entityViewID, newEntity);
+
+        // Add the entity to the client entities collection
+        if(this.clientEntities.has(client.id)) {
+            this.clientEntities.get(client.id).push(entityViewID);
+        } else {
+            this.clientEntities.set(client.id, [entityViewID]);
+        }
+
+        logger.silly(`*** Send Player Joined Message  - User Name = ${userName}***`);
+
+        this.broadcast("playerJoined", {userName: userName}, {except : client});
     }
 }
