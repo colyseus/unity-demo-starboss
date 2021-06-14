@@ -1804,7 +1804,7 @@ GameObject:
   - component: {fileID: 631429328}
   - component: {fileID: 631429327}
   m_Layer: 0
-  m_Name: ExampleManager
+  m_Name: ColyseusManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

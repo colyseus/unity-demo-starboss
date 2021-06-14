@@ -22,13 +22,13 @@ public class ExampleRoomController
     ///     OnNetworkEntityAdd delegate for OnNetworkEntityAdd event.
     /// </summary>
     /// <param name="entity">Then entity that was just added to the room.</param>
-    public delegate void OnNetworkEntityAdd(ExampleNetworkedEntity entity);
+    public delegate void OnNetworkEntityAdd(ColyseusNetworkedEntity entity);
 
     /// <summary>
     ///     OnNetworkEntityRemoved delegate for OnNetworkEntityRemoved event.
     /// </summary>
     /// <param name="entity">Then entity that was just removed to the room.</param>
-    public delegate void OnNetworkEntityRemoved(ExampleNetworkedEntity entity, ColyseusNetworkedEntityView view);
+    public delegate void OnNetworkEntityRemoved(ColyseusNetworkedEntity entity, ColyseusNetworkedEntityView view);
 
     /// <summary>
     ///     Event for when a NetworkEntity is added to the room.
@@ -44,7 +44,7 @@ public class ExampleRoomController
     ///     Our user object we get upon joining a room.
     /// </summary>
     [SerializeField]
-    private static ExampleNetworkedUser _currentNetworkedUser;
+    private static ColyseusNetworkedUser _currentNetworkedUser;
 
     /// <summary>
     ///     The Client that is created when connecting to the Colyseus server.
@@ -55,20 +55,20 @@ public class ExampleRoomController
 
     /// <summary>
     ///     Collection of entity creation callbacks. Callbacks are added to
-    ///     the collection when a <see cref="ExampleNetworkedEntity" /> is created.
+    ///     the collection when a <see cref="ColyseusNetworkedEntity" /> is created.
     ///     The callbacks are invoked and removed from the collection once the
     ///     entity has been added to the room.
     /// </summary>
-    private Dictionary<string, Action<ExampleNetworkedEntity>> _creationCallbacks =
-        new Dictionary<string, Action<ExampleNetworkedEntity>>();
+    private Dictionary<string, Action<ColyseusNetworkedEntity>> _creationCallbacks =
+        new Dictionary<string, Action<ColyseusNetworkedEntity>>();
     //==========================
 
     // TODO: Replace GameDevWare stuff
     /// <summary>
     ///     Collection for tracking entities that have been added to the room.
     /// </summary>
-    private IndexedDictionary<string, ExampleNetworkedEntity> _entities =
-        new IndexedDictionary<string, ExampleNetworkedEntity>();
+    private IndexedDictionary<string, ColyseusNetworkedEntity> _entities =
+        new IndexedDictionary<string, ColyseusNetworkedEntity>();
 
     /// <summary>
     ///     Collection for tracking entity views that have been added to the room.
@@ -107,7 +107,7 @@ public class ExampleRoomController
     /// <summary>
     ///     The current or active Room we get when joining or creating a room.
     /// </summary>
-    private ColyseusRoom<ExampleRoomState> _room;
+    private ColyseusRoom<ColyseusRoomState> _room;
 
     /// <summary>
     ///     The time as received from the server in milliseconds.
@@ -117,8 +117,8 @@ public class ExampleRoomController
     /// <summary>
     ///     Collection for tracking users that have joined the room.
     /// </summary>
-    private IndexedDictionary<string, ExampleNetworkedUser> _users =
-        new IndexedDictionary<string, ExampleNetworkedUser>();
+    private IndexedDictionary<string, ColyseusNetworkedUser> _users =
+        new IndexedDictionary<string, ColyseusNetworkedUser>();
 
     /// <summary>
     ///     Used to help calculate the latency of the connection to the server.
@@ -172,7 +172,7 @@ public class ExampleRoomController
         }
     }
 
-    public ColyseusRoom<ExampleRoomState> Room
+    public ColyseusRoom<ColyseusRoomState> Room
     {
         get { return _room; }
     }
@@ -182,7 +182,7 @@ public class ExampleRoomController
         get { return _lastRoomId; }
     }
 
-    public IndexedDictionary<string, ExampleNetworkedEntity> Entities
+    public IndexedDictionary<string, ColyseusNetworkedEntity> Entities
     {
         get { return _entities; }
     }
@@ -192,12 +192,12 @@ public class ExampleRoomController
         get { return _entityViews; }
     }
 
-    public Dictionary<string, Action<ExampleNetworkedEntity>> CreationCallbacks
+    public Dictionary<string, Action<ColyseusNetworkedEntity>> CreationCallbacks
     {
         get { return _creationCallbacks; }
     }
 
-    public ExampleNetworkedUser CurrentNetworkedUser
+    public ColyseusNetworkedUser CurrentNetworkedUser
     {
         get { return _currentNetworkedUser; }
     }
@@ -237,7 +237,7 @@ public class ExampleRoomController
     ///     Checks if a <see cref="ExampleNetworkedEntityView" /> exists for
     ///     the given ID.
     /// </summary>
-    /// <param name="entityId">The ID of the <see cref="ExampleNetworkedEntity" /> we're checking for.</param>
+    /// <param name="entityId">The ID of the <see cref="ColyseusNetworkedEntity" /> we're checking for.</param>
     /// <returns></returns>
     public bool HasEntityView(string entityId)
     {
@@ -326,7 +326,7 @@ public class ExampleRoomController
                 options.Add(option.Key, option.Value);
             }
 
-            _room = await client.Create<ExampleRoomState>(roomName, options);
+            _room = await client.Create<ColyseusRoomState>(roomName, options);
         }
         catch (Exception ex)
         {
@@ -357,7 +357,7 @@ public class ExampleRoomController
                 options.Add(option.Key, option.Value);
             }
 
-            _room = await _client.JoinOrCreate<ExampleRoomState>(roomName, options);
+            _room = await _client.JoinOrCreate<ColyseusRoomState>(roomName, options);
         }
         catch (Exception ex)
         {
@@ -533,7 +533,7 @@ public class ExampleRoomController
         {
             while (_room == null || !_room.colyseusConnection.IsOpen)
             {
-                _room = await _client.JoinById<ExampleRoomState>(roomId, null);
+                _room = await _client.JoinById<ColyseusRoomState>(roomId, null);
 
                 if (_room == null || !_room.colyseusConnection.IsOpen)
                 {
@@ -556,11 +556,11 @@ public class ExampleRoomController
     }
 
     /// <summary>
-    ///     The callback for the event when a <see cref="ExampleNetworkedEntity" /> is added to a room.
+    ///     The callback for the event when a <see cref="ColyseusNetworkedEntity" /> is added to a room.
     /// </summary>
     /// <param name="entity">The entity that was just added.</param>
     /// <param name="key">The entity's key</param>
-    private async void OnEntityAdd(string key, ExampleNetworkedEntity entity)
+    private async void OnEntityAdd(string key, ColyseusNetworkedEntity entity)
     {
         LSLog.LogImportant(
             $"On Entity Add [{entity.__refId} | {entity.id}] add: x => {entity.xPos}, y => {entity.yPos}, z => {entity.zPos}");
@@ -583,11 +583,11 @@ public class ExampleRoomController
     }
 
     /// <summary>
-    ///     The callback for the event when a <see cref="ExampleNetworkedEntity" /> is removed from a room.
+    ///     The callback for the event when a <see cref="ColyseusNetworkedEntity" /> is removed from a room.
     /// </summary>
     /// <param name="entity">The entity that was just removed.</param>
     /// <param name="key">The entity's key</param>
-    private void OnEntityRemoved(string key, ExampleNetworkedEntity entity)
+    private void OnEntityRemoved(string key, ColyseusNetworkedEntity entity)
     {
         if (_entities.ContainsKey(entity.id))
         {
@@ -606,11 +606,11 @@ public class ExampleRoomController
     }
 
     /// <summary>
-    ///     Callback for when a <see cref="ExampleNetworkedUser" /> is added to a room.
+    ///     Callback for when a <see cref="ColyseusNetworkedUser" /> is added to a room.
     /// </summary>
     /// <param name="user">The user object</param>
     /// <param name="key">The user key</param>
-    private void OnUserAdd(string key, ExampleNetworkedUser user)
+    private void OnUserAdd(string key, ColyseusNetworkedUser user)
     {
         LSLog.LogImportant($"user [{user.__refId} | {user.id} | key {key}] Joined");
 
@@ -636,7 +636,7 @@ public class ExampleRoomController
     /// </summary>
     /// <param name="user">The removed user.</param>
     /// <param name="key">The user key.</param>
-    private void OnUserRemove(string key, ExampleNetworkedUser user)
+    private void OnUserRemove(string key, ColyseusNetworkedUser user)
     {
         LSLog.LogImportant($"user [{user.__refId} | {user.id} | key {key}] Left");
 
@@ -666,7 +666,7 @@ public class ExampleRoomController
     /// </summary>
     /// <param name="state">The room state.</param>
     /// <param name="isFirstState">Is it the first state?</param>
-    private static void OnStateChangeHandler(ExampleRoomState state, bool isFirstState)
+    private static void OnStateChangeHandler(ColyseusRoomState state, bool isFirstState)
     {
         //LSLog.LogImportant("State has been updated!");
         onRoomStateChanged?.Invoke(state.attributes);
@@ -678,7 +678,7 @@ public class ExampleRoomController
     /// <param name="roomToPing">The <see cref="ColyseusRoom{T}" /> to ping.</param>
     private IEnumerator RunPingThread(object roomToPing)
     {
-        ColyseusRoom<ExampleRoomState> currentRoom = (ColyseusRoom<ExampleRoomState>) roomToPing;
+        ColyseusRoom<ColyseusRoomState> currentRoom = (ColyseusRoom<ColyseusRoomState>) roomToPing;
 
         const float pingInterval = 0.5f; // seconds
         const float pingTimeout = 15f; //seconds

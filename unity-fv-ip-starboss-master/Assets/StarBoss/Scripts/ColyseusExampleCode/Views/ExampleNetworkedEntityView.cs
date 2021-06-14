@@ -39,9 +39,9 @@ using UnityEngine;
         public bool checkForSpeedHacks = false;
 
         [SerializeField]
-        protected ExampleNetworkedEntity state;
-        protected ExampleNetworkedEntity previousState;
-        protected ExampleNetworkedEntity localUpdatedState;
+        protected ColyseusNetworkedEntity state;
+        protected ColyseusNetworkedEntity previousState;
+        protected ColyseusNetworkedEntity localUpdatedState;
 
         //Last time state was updated here was its hash
         protected double lastStateTimestamp;
@@ -129,7 +129,7 @@ using UnityEngine;
         }
 
 
-        public virtual void InitiView(ExampleNetworkedEntity entity)
+        public virtual void InitiView(ColyseusNetworkedEntity entity)
         {
             try
             {

@@ -187,12 +187,12 @@ public class StarBossGameUIController : GameUIController
         }
     }
 
-    private void OnAddNetworkEntity(ExampleNetworkedEntity entity)
+    private void OnAddNetworkEntity(ColyseusNetworkedEntity entity)
     {
         StartCoroutine(WaitAddEntity(entity));
     }
 
-    private IEnumerator WaitAddEntity(ExampleNetworkedEntity entity)
+    private IEnumerator WaitAddEntity(ColyseusNetworkedEntity entity)
     {
         while (!StarBossGameManager.Instance.JoinComplete)
         {
@@ -201,7 +201,7 @@ public class StarBossGameUIController : GameUIController
         playerInfo.AddPlayer(entity);
     }
 
-    private void OnRemoveNetworkEntity(ExampleNetworkedEntity entity, ColyseusNetworkedEntityView view)
+    private void OnRemoveNetworkEntity(ColyseusNetworkedEntity entity, ColyseusNetworkedEntityView view)
     {
         playerInfo.RemovePlayer(entity);
     }

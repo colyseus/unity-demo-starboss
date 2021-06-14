@@ -5,6 +5,6 @@ using UnityEngine;
 
 public class OnJoinMessage
 {
-    public ExampleNetworkedUser newNetworkedUser;
+    public ColyseusNetworkedUser newNetworkedUser;
     public string customLogic;
 }

@@ -129,7 +129,7 @@ public class PlayerSpaceshipController : ExampleNetworkedEntityView
         gameObject.layer = 11;  //This is "OtherShip" in the physics layer
     }
 
-    public override void InitiView(ExampleNetworkedEntity entity)
+    public override void InitiView(ColyseusNetworkedEntity entity)
     {
         base.InitiView(entity);
         damageable.remoteEntityID = entity.id;
@@ -255,7 +255,7 @@ public class PlayerSpaceshipController : ExampleNetworkedEntityView
 
     void CalculateShootingLogic()
     {
-        if (IsAlive == false)
+        if (IsAlive == false || state == null)
         {
             return;
         }

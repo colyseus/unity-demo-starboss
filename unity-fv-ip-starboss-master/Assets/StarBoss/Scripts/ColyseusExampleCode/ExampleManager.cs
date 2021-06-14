@@ -18,7 +18,7 @@ public class ExampleManager : ColyseusManager<ExampleManager>
     /// <summary>
     ///     Returns a reference to the current networked user.
     /// </summary>
-    public ExampleNetworkedEntity CurrentNetworkedEntity;
+    public ColyseusNetworkedEntity CurrentNetworkedEntity;
 
     private bool isInitialized;
 
@@ -57,7 +57,7 @@ public class ExampleManager : ColyseusManager<ExampleManager>
     /// <summary>
     ///     Returns a reference to the current networked user.
     /// </summary>
-    public ExampleNetworkedUser CurrentUser
+    public ColyseusNetworkedUser CurrentUser
     {
         get { return _roomController.CurrentNetworkedUser; }
     }
@@ -78,7 +78,7 @@ public class ExampleManager : ColyseusManager<ExampleManager>
         set { _userName = value; }
     }
 
-    public ColyseusRoom<ExampleRoomState> Room
+    public ColyseusRoom<ColyseusRoomState> Room
     {
         get
         {
@@ -99,7 +99,7 @@ public class ExampleManager : ColyseusManager<ExampleManager>
         }
     }
 
-    public IndexedDictionary<string, ExampleNetworkedEntity> Entities
+    public IndexedDictionary<string, ColyseusNetworkedEntity> Entities
     {
         get
         {
@@ -207,7 +207,7 @@ public class ExampleManager : ColyseusManager<ExampleManager>
     ///     Checks if a <see cref="ColyseusNetworkedEntityView" /> exists for
     ///     the given ID.
     /// </summary>
-    /// <param name="entityId">The ID of the <see cref="ExampleNetworkedEntity" /> we're checking for.</param>
+    /// <param name="entityId">The ID of the <see cref="ColyseusNetworkedEntity" /> we're checking for.</param>
     /// <returns></returns>
     public bool HasEntityView(string entityId)
     {
@@ -335,7 +335,7 @@ public class ExampleManager : ColyseusManager<ExampleManager>
 #region Networked Entity Creation
 
     /// <summary>
-    ///     Creates a new <see cref="ExampleNetworkedEntity" /> with the given prefab and attributes.
+    ///     Creates a new <see cref="ColyseusNetworkedEntity" /> with the given prefab and attributes.
     /// </summary>
     /// <param name="prefab">Prefab you would like to use to create the entity</param>
     /// <param name="attributes">Entity attributes</param>
@@ -345,7 +345,7 @@ public class ExampleManager : ColyseusManager<ExampleManager>
     }
 
     /// <summary>
-    ///     Creates a new <see cref="ExampleNetworkedEntity" /> with the given prefab and attributes
+    ///     Creates a new <see cref="ColyseusNetworkedEntity" /> with the given prefab and attributes
     ///     and places it at the provided position.
     /// </summary>
     /// <param name="prefab">Prefab you would like to use to create the entity</param>
@@ -359,7 +359,7 @@ public class ExampleManager : ColyseusManager<ExampleManager>
     }
 
     /// <summary>
-    ///     Creates a new <see cref="ExampleNetworkedEntity" /> with the given prefab and attributes
+    ///     Creates a new <see cref="ColyseusNetworkedEntity" /> with the given prefab and attributes
     ///     and places it at the provided position and rotation.
     /// </summary>
     /// <param name="prefab">Prefab you would like to use to create the entity</param>
@@ -374,7 +374,7 @@ public class ExampleManager : ColyseusManager<ExampleManager>
     }
 
     /// <summary>
-    ///     Creates a new <see cref="ExampleNetworkedEntity" /> with the given <see cref="ColyseusNetworkedEntityView" /> and
+    ///     Creates a new <see cref="ColyseusNetworkedEntity" /> with the given <see cref="ColyseusNetworkedEntityView" /> and
     ///     attributes
     ///     and places it at the provided position and rotation.
     /// </summary>
@@ -382,50 +382,50 @@ public class ExampleManager : ColyseusManager<ExampleManager>
     /// <param name="rotation">Position for the new entity</param>
     /// <param name="attributes">Position for the new entity</param>
     /// <param name="viewToAssign">
-    ///     The provided view that will be assigned to the new <see cref="ExampleNetworkedEntity" />
+    ///     The provided view that will be assigned to the new <see cref="ColyseusNetworkedEntity" />
     /// </param>
     /// <param name="callback">
-    ///     Callback that will be invoked with the newly created <see cref="ExampleNetworkedEntity" />
+    ///     Callback that will be invoked with the newly created <see cref="ColyseusNetworkedEntity" />
     /// </param>
     public static void CreateNetworkedEntityWithTransform(Vector3 position, Quaternion rotation,
         Dictionary<string, object> attributes = null, ColyseusNetworkedEntityView viewToAssign = null,
-        Action<ExampleNetworkedEntity> callback = null)
+        Action<ColyseusNetworkedEntity> callback = null)
     {
         Instance._networkedEntityFactory.CreateNetworkedEntityWithTransform(Instance._roomController.Room, position,
             rotation, attributes, viewToAssign, callback);
     }
 
     /// <summary>
-    ///     Creates a new <see cref="ExampleNetworkedEntity" /> with the given prefab, attributes, and
+    ///     Creates a new <see cref="ColyseusNetworkedEntity" /> with the given prefab, attributes, and
     ///     <see cref="ColyseusNetworkedEntityView" />.
     /// </summary>
     /// <param name="prefab">Prefab you would like to use</param>
     /// <param name="attributes">Position for the new entity</param>
     /// <param name="viewToAssign">
-    ///     The provided view that will be assigned to the new <see cref="ExampleNetworkedEntity" />
+    ///     The provided view that will be assigned to the new <see cref="ColyseusNetworkedEntity" />
     /// </param>
     /// <param name="callback">
-    ///     Callback that will be invoked with the newly created <see cref="ExampleNetworkedEntity" />
+    ///     Callback that will be invoked with the newly created <see cref="ColyseusNetworkedEntity" />
     /// </param>
     public static void CreateNetworkedEntity(string prefab, Dictionary<string, object> attributes = null,
-        ColyseusNetworkedEntityView viewToAssign = null, Action<ExampleNetworkedEntity> callback = null)
+        ColyseusNetworkedEntityView viewToAssign = null, Action<ColyseusNetworkedEntity> callback = null)
     {
         Instance._networkedEntityFactory.CreateNetworkedEntity(Instance._roomController.Room, prefab, attributes,
             viewToAssign, callback);
     }
 
     /// <summary>
-    ///     Creates a new <see cref="ExampleNetworkedEntity" /> attributes and <see cref="ColyseusNetworkedEntityView" />.
+    ///     Creates a new <see cref="ColyseusNetworkedEntity" /> attributes and <see cref="ColyseusNetworkedEntityView" />.
     /// </summary>
     /// <param name="attributes">Position for the new entity</param>
     /// <param name="viewToAssign">
-    ///     The provided view that will be assigned to the new <see cref="ExampleNetworkedEntity" />
+    ///     The provided view that will be assigned to the new <see cref="ColyseusNetworkedEntity" />
     /// </param>
     /// <param name="callback">
-    ///     Callback that will be invoked with the newly created <see cref="ExampleNetworkedEntity" />
+    ///     Callback that will be invoked with the newly created <see cref="ColyseusNetworkedEntity" />
     /// </param>
     public static void CreateNetworkedEntity(Dictionary<string, object> attributes = null,
-        ColyseusNetworkedEntityView viewToAssign = null, Action<ExampleNetworkedEntity> callback = null)
+        ColyseusNetworkedEntityView viewToAssign = null, Action<ColyseusNetworkedEntity> callback = null)
     {
         Instance._networkedEntityFactory.CreateNetworkedEntity(Instance._roomController.Room, attributes, viewToAssign,
             callback);
@@ -437,7 +437,7 @@ public class ExampleManager : ColyseusManager<ExampleManager>
     /// </summary>
     /// <param name="model"></param>
     /// <param name="view"></param>
-    public void RegisterNetworkedEntityView(ExampleNetworkedEntity model, ColyseusNetworkedEntityView view)
+    public void RegisterNetworkedEntityView(ColyseusNetworkedEntity model, ColyseusNetworkedEntityView view)
     {
         _networkedEntityFactory.RegisterNetworkedEntityView(model, view);
     }
@@ -447,7 +447,7 @@ public class ExampleManager : ColyseusManager<ExampleManager>
     ///     <para>Requires that the entity has a "prefab" attribute defined.</para>
     /// </summary>
     /// <param name="entity"></param>
-    private static async void CreateFromPrefab(ExampleNetworkedEntity entity)
+    private static async void CreateFromPrefab(ColyseusNetworkedEntity entity)
     {
         await Instance._networkedEntityFactory.CreateFromPrefab(entity);
     }

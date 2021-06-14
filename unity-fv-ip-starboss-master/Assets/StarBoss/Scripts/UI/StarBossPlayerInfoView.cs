@@ -20,7 +20,7 @@ public class StarBossPlayerInfoView : MonoBehaviour
         UpdateView();
     }
 
-    public void AddPlayer(ExampleNetworkedEntity playerEntity)
+    public void AddPlayer(ColyseusNetworkedEntity playerEntity)
     {
         // Determine what team the player is on
         if (_isVersus == false)
@@ -52,7 +52,7 @@ public class StarBossPlayerInfoView : MonoBehaviour
         }
     }
 
-    public void RemovePlayer(ExampleNetworkedEntity playerEntity)
+    public void RemovePlayer(ColyseusNetworkedEntity playerEntity)
     {
         // Determine what team the player is on
         if (_isVersus == false)

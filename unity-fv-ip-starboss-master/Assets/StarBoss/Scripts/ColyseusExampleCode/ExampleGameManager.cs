@@ -24,7 +24,7 @@ public class ExampleGameManager : MonoBehaviour
         ExampleRoomController.onRemoveNetworkEntity -= OnNetworkRemove;
     }
 
-    protected virtual void OnNetworkAdd(ExampleNetworkedEntity entity)
+    protected virtual void OnNetworkAdd(ColyseusNetworkedEntity entity)
     {
         LSLog.LogImportant($"Game Manager - OnNetworkAdd");
 
@@ -39,12 +39,12 @@ public class ExampleGameManager : MonoBehaviour
         }
     }
 
-    protected virtual void OnNetworkRemove(ExampleNetworkedEntity entity, ColyseusNetworkedEntityView view)
+    protected virtual void OnNetworkRemove(ColyseusNetworkedEntity entity, ColyseusNetworkedEntityView view)
     {
         RemoveView(view);
     }
 
-    private void CreateView(ExampleNetworkedEntity entity)
+    private void CreateView(ColyseusNetworkedEntity entity)
     {
         //LSLog.LogImportant("print: " + JsonUtility.ToJson(entity));
         ColyseusNetworkedEntityView newView = Instantiate(prefab);

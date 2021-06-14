@@ -379,7 +379,7 @@ public class StarBossGameManager : ExampleGameManager
         ExampleManager.CustomServerMethod("playerKilled", new object[] { attackerID, deathID});
     }
 
-    protected override void OnNetworkRemove(ExampleNetworkedEntity entity, ColyseusNetworkedEntityView view)
+    protected override void OnNetworkRemove(ColyseusNetworkedEntity entity, ColyseusNetworkedEntityView view)
     {
         base.OnNetworkRemove(entity, view);
         
