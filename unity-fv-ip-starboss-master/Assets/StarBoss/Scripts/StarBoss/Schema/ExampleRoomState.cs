@@ -1,7 +1,7 @@
 using Colyseus.Schema;
 using Colyseus;
 
-public class ExampleRoomState : ColyseusRoomState
+public class ExampleRoomState : Schema
 {
 	[Type(0, "map", typeof(MapSchema<ExampleNetworkedEntity>))]
 	public MapSchema<ExampleNetworkedEntity> networkedEntities = new MapSchema<ExampleNetworkedEntity>();

@@ -8,7 +8,7 @@ using System.Reflection;
 using UnityEngine;
 
     public class ExampleNetworkedEntityView : ColyseusNetworkedEntityView
-    {
+{
         public string OwnerId { get; private set; }
         public int RefId { get; private set; }
         public bool IsEntityOwner { get; private set; }

@@ -2,7 +2,7 @@ using Colyseus.Schema;
 using Colyseus;
 
 [System.Serializable]
-public class ExampleNetworkedUser : ColyseusNetworkedUser
+public class ExampleNetworkedUser : Schema
 {
 	public string updateHash;
 

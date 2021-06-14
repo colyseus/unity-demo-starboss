@@ -3,7 +3,7 @@ using Colyseus;
 using System.Collections.Generic;
 
 [System.Serializable]
-public class ExampleNetworkedEntity : ColyseusNetworkedEntity
+public class ExampleNetworkedEntity : Schema
 {
 	//public string updateHash;
 
