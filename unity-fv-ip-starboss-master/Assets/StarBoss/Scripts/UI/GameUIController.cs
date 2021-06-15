@@ -5,6 +5,7 @@ using TMPro;
 
 public class GameUIController : MonoBehaviour
 {
+#pragma warning disable 0649
     [SerializeField]
     private Button exitButton = null;
 
@@ -13,7 +14,7 @@ public class GameUIController : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI pingLabel;
-
+#pragma warning restore 0649
     public UnityEvent onPlayerReady;
     public UnityEvent onExit;
 

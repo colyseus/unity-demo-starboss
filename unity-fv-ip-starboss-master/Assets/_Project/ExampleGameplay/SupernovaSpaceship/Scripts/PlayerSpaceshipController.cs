@@ -35,6 +35,7 @@ public class PlayerSpaceshipController : ExampleNetworkedEntityView
     private Vector3 rawRemoteSteeringInput;
     private Vector3 spawnPosition;
 
+#pragma warning disable 0649
     [SerializeField]
     private Damageable damageable;
 
@@ -43,7 +44,7 @@ public class PlayerSpaceshipController : ExampleNetworkedEntityView
 
     [SerializeField]
     private PlayerEffectsController effectsController;
-
+#pragma warning restore 0649
     public int TeamIndex
     {
         get

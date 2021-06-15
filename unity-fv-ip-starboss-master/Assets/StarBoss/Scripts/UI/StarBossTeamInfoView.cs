@@ -8,6 +8,7 @@ using UnityEngine.PlayerLoop;
 
 public class StarBossTeamInfoView : MonoBehaviour
 {
+#pragma warning disable 0649
     [SerializeField]
     private TextMeshProUGUI teamNameText;
 
@@ -22,6 +23,7 @@ public class StarBossTeamInfoView : MonoBehaviour
 
     [SerializeField]
     private RectTransform playerListContent;
+#pragma warning restore 0649
 
     private Dictionary<string, StarBossPlayerListItem> playerListItems;
     private List<ColyseusNetworkedEntity> playerEntities;

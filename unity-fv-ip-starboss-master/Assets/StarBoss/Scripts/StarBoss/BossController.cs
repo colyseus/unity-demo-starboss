@@ -14,12 +14,13 @@ public class BossController : MonoBehaviour
         }
     }
 
+#pragma warning disable 0649
     [SerializeField]
     private GameObject bossRoot;
 
     [SerializeField]
     private WormAI wormAI;
-
+#pragma warning restore 0649
     private Dictionary<string, string> attributeUpdate = new Dictionary<string, string>();
 
     private void OnEnable()

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class StarBossLobbyController : LobbyController
 {
     [SerializeField]
-    private Toggle coopToggle;
+    private Toggle coopToggle = null;
 
     public override void CreateRoom()
     {

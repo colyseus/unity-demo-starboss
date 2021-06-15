@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class StarBossGameUIController : GameUIController
 {
+#pragma warning disable 0649
     [SerializeField]
     private TextMeshProUGUI generalMessageText;
     [SerializeField]
@@ -36,7 +37,7 @@ public class StarBossGameUIController : GameUIController
 
     [SerializeField]
     private CanvasGroup loadingCover;
-
+#pragma warning restore 0649
     private PlayerSpaceshipController myShip;
 
     private Queue<GameObject> playerJoinMessages;

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class StarBossPlayerTag : MonoBehaviour
 {
+#pragma warning disable 0649
     [SerializeField]
     private TextMeshProUGUI playerTag;
 
@@ -23,7 +24,7 @@ public class StarBossPlayerTag : MonoBehaviour
 
     [SerializeField]
     private Color enemyColor;
-
+#pragma warning restore 0649
     private bool friendly = false;
 
     void Awake()

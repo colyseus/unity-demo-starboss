@@ -46,8 +46,6 @@ using UnityEngine;
         //Last time state was updated here was its hash
         protected double lastStateTimestamp;
         private float counterStateSyncUpdateRate = 0f;
-        private bool lerpPosition = false;
-        private long lastFullSync = 0;
 
         // Clients store twenty states with "playback" information from the server. This
         // array contains the official state of this object at different times according to

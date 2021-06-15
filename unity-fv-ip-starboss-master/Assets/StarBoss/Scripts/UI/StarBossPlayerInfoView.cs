@@ -6,11 +6,12 @@ using UnityEngine;
 
 public class StarBossPlayerInfoView : MonoBehaviour
 {
+#pragma warning disable 0649
     [SerializeField]
     private StarBossTeamInfoView teamAView;
     [SerializeField]
     private StarBossTeamInfoView teamBView;
-
+#pragma warning restore 0649
     private bool _isVersus;
 
     public void SetData(bool isVersus)
@@ -38,7 +39,7 @@ public class StarBossPlayerInfoView : MonoBehaviour
             else if (teamIdx == 1)
             {
                 teamBView.AddPlayer(playerEntity);
-            }
+            } 
         }
     }
 

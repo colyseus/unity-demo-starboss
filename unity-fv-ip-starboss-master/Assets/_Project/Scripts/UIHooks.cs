@@ -8,10 +8,12 @@ using DG.Tweening;
 
 public class UIHooks : MonoBehaviour
 {
+#pragma warning disable 0649
     [SerializeField] Text healthText = default;
     [SerializeField] Image healthBar = default;
     [SerializeField] Image healthBarEffect = default;
     [SerializeField] Image fadeImage;
+#pragma warning restore 0649
     public void SetHealth(int current, int total)
     {
         if (healthText != null)

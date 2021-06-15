@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class CreateUserMenu : MonoBehaviour
 {
+#pragma warning disable 0649
     [SerializeField]
     private Button createButton = null;
 
@@ -18,7 +19,7 @@ public class CreateUserMenu : MonoBehaviour
 
     [SerializeField]
     private Toggle secureToggle;
-
+#pragma warning restore 0649
     public string UserName
     {
         get { return inputField.text; }
