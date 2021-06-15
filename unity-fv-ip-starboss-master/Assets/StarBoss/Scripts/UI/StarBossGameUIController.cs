@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class StarBossGameUIController : GameUIController
 {
+#pragma warning disable 0649
     [SerializeField]
     private TextMeshProUGUI generalMessageText;
     [SerializeField]
@@ -36,7 +37,7 @@ public class StarBossGameUIController : GameUIController
 
     [SerializeField]
     private CanvasGroup loadingCover;
-
+#pragma warning restore 0649
     private PlayerSpaceshipController myShip;
 
     private Queue<GameObject> playerJoinMessages;
@@ -187,12 +188,12 @@ public class StarBossGameUIController : GameUIController
         }
     }
 
-    private void OnAddNetworkEntity(ExampleNetworkedEntity entity)
+    private void OnAddNetworkEntity(ColyseusNetworkedEntity entity)
     {
         StartCoroutine(WaitAddEntity(entity));
     }
 
-    private IEnumerator WaitAddEntity(ExampleNetworkedEntity entity)
+    private IEnumerator WaitAddEntity(ColyseusNetworkedEntity entity)
     {
         while (!StarBossGameManager.Instance.JoinComplete)
         {
@@ -201,7 +202,7 @@ public class StarBossGameUIController : GameUIController
         playerInfo.AddPlayer(entity);
     }
 
-    private void OnRemoveNetworkEntity(ExampleNetworkedEntity entity, ColyseusNetworkedEntityView view)
+    private void OnRemoveNetworkEntity(ColyseusNetworkedEntity entity, ColyseusNetworkedEntityView view)
     {
         playerInfo.RemovePlayer(entity);
     }

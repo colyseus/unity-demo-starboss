@@ -8,6 +8,7 @@ using UnityEngine.PlayerLoop;
 
 public class StarBossTeamInfoView : MonoBehaviour
 {
+#pragma warning disable 0649
     [SerializeField]
     private TextMeshProUGUI teamNameText;
 
@@ -22,9 +23,10 @@ public class StarBossTeamInfoView : MonoBehaviour
 
     [SerializeField]
     private RectTransform playerListContent;
+#pragma warning restore 0649
 
     private Dictionary<string, StarBossPlayerListItem> playerListItems;
-    private List<ExampleNetworkedEntity> playerEntities;
+    private List<ColyseusNetworkedEntity> playerEntities;
     private List<StarBossPlayerListItem> listItemHelper = new List<StarBossPlayerListItem>();
 
     private string _teamName;
@@ -60,7 +62,7 @@ public class StarBossTeamInfoView : MonoBehaviour
     {
         if (playerEntities == null)
         {
-            playerEntities = new List<ExampleNetworkedEntity>();
+            playerEntities = new List<ColyseusNetworkedEntity>();
         }
 
         if (playerListItems == null)
@@ -116,7 +118,7 @@ public class StarBossTeamInfoView : MonoBehaviour
         }
     }
 
-    public void AddPlayer(ExampleNetworkedEntity playerEntity)
+    public void AddPlayer(ColyseusNetworkedEntity playerEntity)
     {
         if (playerListItems == null)
         {
@@ -125,7 +127,7 @@ public class StarBossTeamInfoView : MonoBehaviour
 
         if (playerEntities == null)
         {
-            playerEntities = new List<ExampleNetworkedEntity>();
+            playerEntities = new List<ColyseusNetworkedEntity>();
         }
 
         if (playerListItems.ContainsKey(playerEntity.id) == false)
@@ -155,7 +157,7 @@ public class StarBossTeamInfoView : MonoBehaviour
         }
     }
 
-    public void RemovePlayer(ExampleNetworkedEntity playerEntity)
+    public void RemovePlayer(ColyseusNetworkedEntity playerEntity)
     {
         if (playerListItems == null)
         {
@@ -178,7 +180,7 @@ public class StarBossTeamInfoView : MonoBehaviour
         }
     }
 
-    public bool ContainsPlayer(ExampleNetworkedEntity playerEntity)
+    public bool ContainsPlayer(ColyseusNetworkedEntity playerEntity)
     {
         if (playerListItems == null)
         {

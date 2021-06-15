@@ -35,6 +35,7 @@ public class PlayerSpaceshipController : ExampleNetworkedEntityView
     private Vector3 rawRemoteSteeringInput;
     private Vector3 spawnPosition;
 
+#pragma warning disable 0649
     [SerializeField]
     private Damageable damageable;
 
@@ -43,7 +44,7 @@ public class PlayerSpaceshipController : ExampleNetworkedEntityView
 
     [SerializeField]
     private PlayerEffectsController effectsController;
-
+#pragma warning restore 0649
     public int TeamIndex
     {
         get
@@ -129,7 +130,7 @@ public class PlayerSpaceshipController : ExampleNetworkedEntityView
         gameObject.layer = 11;  //This is "OtherShip" in the physics layer
     }
 
-    public override void InitiView(ExampleNetworkedEntity entity)
+    public override void InitiView(ColyseusNetworkedEntity entity)
     {
         base.InitiView(entity);
         damageable.remoteEntityID = entity.id;
@@ -255,7 +256,7 @@ public class PlayerSpaceshipController : ExampleNetworkedEntityView
 
     void CalculateShootingLogic()
     {
-        if (IsAlive == false)
+        if (IsAlive == false || state == null)
         {
             return;
         }

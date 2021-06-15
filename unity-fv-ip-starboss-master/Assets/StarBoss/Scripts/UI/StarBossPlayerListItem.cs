@@ -8,6 +8,7 @@ public class StarBossPlayerListItem : MonoBehaviour
 {
     public int Score { get; private set; }
 
+#pragma warning disable 0649
     [SerializeField]
     private TextMeshProUGUI playerNameText;
 
@@ -20,6 +21,7 @@ public class StarBossPlayerListItem : MonoBehaviour
 
     [SerializeField]
     private GameObject isMineBG;
+#pragma warning restore 0649
 
     private string _playerName;
     private bool _isMine;
