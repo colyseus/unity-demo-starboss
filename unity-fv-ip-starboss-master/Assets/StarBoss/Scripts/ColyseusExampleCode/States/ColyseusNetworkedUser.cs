@@ -9,18 +9,15 @@ using Colyseus.Schema;
 
 public partial class ColyseusNetworkedUser : Schema {
 	[Type(0, "string")]
-	public string id = default(string);
-
-	[Type(1, "string")]
 	public string sessionId = default(string);
 
-	[Type(2, "boolean")]
+	[Type(1, "boolean")]
 	public bool connected = default(bool);
 
-	[Type(3, "number")]
+	[Type(2, "number")]
 	public float timestamp = default(float);
 
-	[Type(4, "map", typeof(MapSchema<string>), "string")]
+	[Type(3, "map", typeof(MapSchema<string>), "string")]
 	public MapSchema<string> attributes = new MapSchema<string>();
 }
 

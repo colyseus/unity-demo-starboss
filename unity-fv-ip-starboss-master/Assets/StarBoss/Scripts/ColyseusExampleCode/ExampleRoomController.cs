@@ -612,7 +612,7 @@ public class ExampleRoomController
     /// <param name="key">The user key</param>
     private void OnUserAdd(string key, ColyseusNetworkedUser user)
     {
-        LSLog.LogImportant($"user [{user.__refId} | {user.id} | key {key}] Joined");
+        LSLog.LogImportant($"user [{user.__refId} | {user.sessionId} | key {key}] Joined");
 
         // Add "player" to map of players
         _users.Add(key, user);
@@ -638,7 +638,7 @@ public class ExampleRoomController
     /// <param name="key">The user key.</param>
     private void OnUserRemove(string key, ColyseusNetworkedUser user)
     {
-        LSLog.LogImportant($"user [{user.__refId} | {user.id} | key {key}] Left");
+        LSLog.LogImportant($"user [{user.__refId} | {user.sessionId} | key {key}] Left");
 
         _users.Remove(key);
     }

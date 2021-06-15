@@ -114,7 +114,7 @@ public class StarBossGameManager : ExampleGameManager
         ExampleManager.NetSend("setAttribute",
             new ExampleAttributeUpdateMessage
             {
-                userId = ExampleManager.Instance.CurrentUser.id,
+                userId = ExampleManager.Instance.CurrentUser.sessionId,
                 attributesToSet = attributes
             });
     }
